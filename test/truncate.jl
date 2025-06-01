@@ -28,10 +28,11 @@ using MatrixAlgebraKit: NoTruncation, TruncationIntersection, TruncationKeepAbov
     @test trunc.components[1] == truncrank(10)
     @test trunc.components[2] == TruncationKeepAbove(1e-2, 1e-3)
 
-    values = [1, 0.9, 0.5, 0.3, 0.01]
+    values = [1, 0.9, 0.5, -0.3, 0.01]
     @test @constinferred(findtruncated(values, truncrank(2))) == 1:2
     @test @constinferred(findtruncated(values, truncrank(2; rev=false))) == [5, 4]
-    @test @constinferred(findtruncated(values, truncrank(2; by=-))) == [5, 4]
+    @test @constinferred(findtruncated(values, truncrank(2; by=((-) ∘ abs)))) == [5, 4]
+    @test @constinferred(findtruncated_sorted(values, truncrank(2))) === 1:2
 
     values = [1, 0.9, 0.5, -0.3, 0.01]
     for strategy in (TruncationKeepAbove(; atol=0.4, rtol=0),

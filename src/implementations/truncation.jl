@@ -185,17 +185,18 @@ Generic interface for finding truncated values of the spectrum of a decompositio
 based on the `strategy`. The output should be a collection of indices specifying
 which values to keep. `MatrixAlgebraKit.findtruncated` is used inside of the default
 implementation of [`truncate!`](@ref) to perform the truncation. It does not assume that the
-values are sorted. For a version that assumes the values are reverse sorted by
-absolute value (which is the standard case for SVD) see
-[`MatrixAlgebraKit.findtruncated_sorted`](@ref).
+values are sorted. For a version that assumes the values are reverse sorted (which is the
+standard case for SVD) see [`MatrixAlgebraKit.findtruncated_sorted`](@ref).
 """ findtruncated
 
 @doc """
     MatrixAlgebraKit.findtruncated_sorted(values::AbstractVector, strategy::TruncationStrategy)
 
-Like [`MatrixAlgebraKit.findtruncated`](@ref) but assumes that the values are sorted in reverse order by
-absolute value. However, note that this assumption is not checked, so passing values that are not sorted
-in that way can silently give unexpected results. This is used in the default implementation of
+Like [`MatrixAlgebraKit.findtruncated`](@ref) but assumes that the values are sorted in reverse order.
+They are assumed to be sorted in a way that is consistent with the truncation strategy,
+which generally means they are sorted by absolute value but some truncation strategies allow
+customizing that. However, note that this assumption is not checked, so passing values that are not sorted
+in the correct way can silently give unexpected results. This is used in the default implementation of
 [`svd_trunc!`](@ref).
 """ findtruncated_sorted
 
